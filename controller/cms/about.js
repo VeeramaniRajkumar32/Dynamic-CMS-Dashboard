@@ -9,7 +9,12 @@ const about = async (req, res) => {
         // const insert = `INSERT INTO about (title,image,description) VALUES ('${title}','${image}','${description}')`
         // await conn.query(insert, async (err,result) =>{
         // console.log(result);
-        const insert = `UPDATE about SET title='${title}',image='${image}',description='${description}' WHERE id='1'`;
+        const insert = `UPDATE 
+                              about 
+                        SET 
+                              title='${title}',image='${image}',description='${description}' 
+                        WHERE 
+                            id='1'`;
         await conn.query(insert, async (err) => {
           if (err) throw err;
           const sql = `SELECT * FROM about WHERE id='1'`;
@@ -29,7 +34,10 @@ const about = async (req, res) => {
         });
       } else {
         let msg = "Uploaded Failed";
-        return res.render("../views/pages/about", { title: "About",errMsg: msg });
+        return res.render("../views/pages/about", {
+          title: "About",
+          errMsg: msg,
+        });
       }
     });
   } catch (error) {

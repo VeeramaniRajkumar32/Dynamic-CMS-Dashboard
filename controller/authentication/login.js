@@ -1,6 +1,7 @@
 const conn = require("../../config/dbConn");
-const generateAccessToken = require("../../middleware/jwtToken").generateAccessToken
+const {generateAccessToken} = require("../../middleware/jwtToken")
 const bcrypt = require("bcrypt");
+const localStorage = require('local-storage');
 
 const login = async (req, res) => {
 	const {username,password} = req.body;
@@ -28,6 +29,7 @@ const login = async (req, res) => {
 				// console.log(token);
 				// console.log(process.env.oneDay);
 				if(token){
+						localStorage.set('user', JSON.stringify(token))
 					res.cookie("token", token).redirect("/dashboard" )
 				}
 			}

@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const conn = require("../../config/dbConn");
-const generateAccessToken = require("../../middleware/jwtToken").generateAccessToken
+const {generateAccessToken} = require("../../middleware/jwtToken")
+const localStorage = require('local-storage');
 
 const register = async (req, res) => {
   const { name,userName,password,confirmPassword } = req.body;
@@ -19,6 +20,7 @@ const register = async (req, res) => {
 				const token = generateAccessToken({ username: userName });
 				const insert = `INSERT INTO login (name,password,email,role) VALUES ('${name}','${hashedPassword}','${userName}', 'admin')`
 				if(await conn.query(insert)){
+					localStorage.set('user', JSON.stringify(token))
 					res.cookie("token", token).redirect('/dashboard')
 				}
 			}else{

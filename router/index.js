@@ -1,16 +1,19 @@
 const router = require('express').Router()
-const upload = require('../middleware/multer').upload
-const multipleFile = require('../middleware/multer').multipleFile
+const {upload, multipleFile} = require('../middleware/multer')
+// const multipleFile = require('../middleware/multer').multipleFile
 const login = require('../controller/authentication/login')
 const register = require('../controller/authentication/register')
 const slider = require('../controller/cms/slider')
-const getAboutPage = require('../controller/cms/about').getAboutPage
-const about = require('../controller/cms/about').about
-const verifyToken = require("../middleware/jwtToken").verifyToken
+const { getAboutPage, about} = require('../controller/cms/about')
+// const about = require('../controller/cms/about').about
+const {verifyToken} = require("../middleware/jwtToken")
 
 
 /* GET home page. */
 router.get("/", (req, res) => {
+  // if(localStorage.getItem('user')){
+  //   localStorage.removeItem('user')
+  // }
     res.cookie('token', '', { maxAge: 0 })
     res.render("../views/index", {title : 'Login'});
   })
